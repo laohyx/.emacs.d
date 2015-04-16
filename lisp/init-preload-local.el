@@ -1,13 +1,25 @@
-(require-package 'color-theme-sanityinc-tomorrow)
 
 
 ;; set color theme
-(color-theme-sanityinc-tomorrow-night)
+(load-theme 'leuven t)
+
+;; (require-package 'color-theme-sanityinc-tomorrow)
+;; ;(color-theme-sanityinc-tomorrow-night)
+;; (color-theme-sanityinc-tomorrow-day)
+
+;; hl-line+
+(require-package 'hl-line+)
+(require 'hl-line+) ; Load this file (it will load `hl-line.el')
+(global-hl-line-mode 1)
+;(set-face-background 'hl-line "#eeeeee")
+;(set-face-background 'hl-line "#3e4446")
+(set-face-foreground 'highlight nil)
+
 ;; truncate long lines
-(set-default 'truncate-lines t)
+; (set-default 'truncate-lines t)
 
 (setq redisplay-dont-pause t
-  scroll-margin 1
+  scroll-margin 3
   scroll-step 1
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
@@ -33,15 +45,37 @@
 (require 'tabbar-ruler)
 
 
-(require-package 'hl-line+)
-(require 'hl-line+) ; Load this file (it will load `hl-line.el')
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "#3e4446")
-(set-face-foreground 'highlight nil)
 
 
-(setq shell-file-name "bash")
+(setq shell-file-name "/bin/bash")
 (setq shell-command-switch "-ic")
+
+;; set font size. height / 10 = pt. Default is 120 (12 pt)
+(set-face-attribute 'default nil :height 110)
+
+
+
+(require-package 'flyspell-lazy)
+(require 'flyspell-lazy)
+(flyspell-lazy-mode 1)
+(flyspell-mode 1)      ; or (flyspell-prog-mode)
+
+;; enable autopair mode 
+(electric-pair-mode)
+
+
+(require-package 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 50)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
+(require-package 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+
+(require-package 'magit)
 
 
 
