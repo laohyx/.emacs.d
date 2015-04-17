@@ -1,6 +1,6 @@
 
-
 ;; set color theme
+(require-package 'leuven-theme)
 (load-theme 'leuven t)
 
 ;; (require-package 'color-theme-sanityinc-tomorrow)
@@ -51,7 +51,7 @@
 (setq shell-command-switch "-ic")
 
 ;; set font size. height / 10 = pt. Default is 120 (12 pt)
-(set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height 100)
 
 
 
@@ -68,6 +68,7 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 50)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+(add-to-list 'recentf-exclude "/.emacs.d/elpa/")
 
 (require-package 'smex)
 (smex-initialize)
@@ -77,6 +78,31 @@
 
 (require-package 'magit)
 
+;; Company-mode
+(require-package 'company)
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+;;(global-set-key "\t" 'company-complete-common)
+(setq company-idle-delay 0)
+
+(require-package 'company-anaconda)
+(add-to-list 'company-backends 'company-anaconda)
+(add-hook 'python-mode-hook 'anaconda-mode)
+
+
+;; ;; company-jedi
+;; (require-package 'company-jedi)
+;; (defun my/python-mode-hook ()
+;;   (add-to-list 'company-backends 'company-jedi))
+;; (add-hook 'python-mode-hook 'my/python-mode-hook)
+;; ;; Advanced usage.
+;; ;; (add-to-list 'company-backends '(company-jedi company-files))
+
+(require-package 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 
 (provide 'init-preload-local)
