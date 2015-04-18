@@ -1,3 +1,4 @@
+(global-auto-revert-mode 1)
 
 ;; set color theme
 (require-package 'leuven-theme)
@@ -69,6 +70,7 @@
 (setq recentf-max-menu-items 50)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (add-to-list 'recentf-exclude "/.emacs.d/elpa/")
+(add-to-list 'recentf-exclude "/.git/COMMIT_EDITMSG")
 
 (require-package 'smex)
 (smex-initialize)
@@ -77,6 +79,7 @@
 
 
 (require-package 'magit)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; Company-mode
 (require-package 'company)
