@@ -2,7 +2,10 @@
 
 ;; set color theme
 (require-package 'leuven-theme)
-(load-theme 'leuven t)
+(if window-system
+    (load-theme 'leuven t))
+
+
 
 ;; (require-package 'color-theme-sanityinc-tomorrow)
 ;; ;(color-theme-sanityinc-tomorrow-night)
@@ -35,18 +38,6 @@
 (require 'cl)
 
 
-;; tabbar-ruler
-(require-package 'tabbar-ruler)
-(setq tabbar-ruler-global-tabbar t) ; If you want tabbar
-;(setq tabbar-ruler-global-ruler t) ; if you want a global ruler
-(setq tabbar-ruler-popup-menu t) ; If you want a popup menu.
-(setq tabbar-ruler-popup-toolbar t) ; If you want a popup toolbar
-(setq tabbar-ruler-popup-scrollbar t) ; If you want to only show the
-                                       ; scroll bar when your mouse is moving.
-(require 'tabbar-ruler)
-
-
-
 
 (setq shell-file-name "/bin/bash")
 (setq shell-command-switch "-ic")
@@ -58,8 +49,8 @@
 
 (require-package 'flyspell-lazy)
 (require 'flyspell-lazy)
-(flyspell-lazy-mode 1)
-(flyspell-mode 1)      ; or (flyspell-prog-mode)
+;;(flyspell-lazy-mode 1)
+;;(flyspell-mode 1)      ; or (flyspell-prog-mode)
 
 ;; enable autopair mode 
 (electric-pair-mode)
@@ -85,13 +76,12 @@
 (require-package 'company)
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
-;;(global-set-key "\t" 'company-complete-common)
+(global-set-key (kbd "M-/") 'company-complete-common)
 (setq company-idle-delay 0)
 
-(require-package 'company-anaconda)
-(add-to-list 'company-backends 'company-anaconda)
-(add-hook 'python-mode-hook 'anaconda-mode)
-
+;; (require-package 'company-anaconda)
+;; (add-to-list 'company-backends 'company-anaconda)
+;; (add-hook 'python-mode-hook 'anaconda-mode)
 
 ;; ;; company-jedi
 ;; (require-package 'company-jedi)
@@ -107,14 +97,36 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; gtags
+(require-package 'ggtags)
 
+(require-package 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+(require-package 'company-irony)
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
+;; (optional) adds CC special commands to `company-begin-commands' in order to
+;; trigger completion at interesting places, such as after scope operator
+;;     std::|
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+
+
+ 
 (provide 'init-preload-local)
-
-
-
-
-
-
 
 
 
