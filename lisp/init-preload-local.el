@@ -127,10 +127,18 @@
 ;;     std::|
 (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
 
-
+(require 'ido)
+(ido-mode t) ;; only use this line to turn off ido for file names!
+(setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
+               "*Messages*" "Async Shell Command"))
 
 (setq compilation-scroll-output 1)
- 
+
+
+(require-package 'yasnippet)
+(yas-global-mode 1)
+(require-package 'php-mode)
+
 (provide 'init-preload-local)
 
 
