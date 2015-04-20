@@ -99,6 +99,9 @@
 
 ;; gtags
 (require-package 'ggtags)
+(add-hook 'c++-mode-hook 'ggtags-mode)
+(add-hook 'c-mode-hook 'ggtags-mode)
+(add-hook 'objc-mode-hook 'ggtags-mode)
 
 (require-package 'irony)
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -125,6 +128,8 @@
 (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
 
 
+
+(setq compilation-scroll-output 1)
  
 (provide 'init-preload-local)
 
