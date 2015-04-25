@@ -57,9 +57,10 @@
 
 (require-package 'recentf)
 (recentf-mode 1)
-(setq recentf-max-menu-items 50)
+(setq recentf-max-menu-items 30)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (add-to-list 'recentf-exclude "/.emacs.d/elpa/")
+(add-to-list 'recentf-exclude "/.ido.last")
 (add-to-list 'recentf-exclude "/.git/COMMIT_EDITMSG")
 
 (require-package 'smex)
@@ -175,47 +176,22 @@ point reaches the beginning or end of the buffer, stop there."
   (lambda() 
     (local-set-key  (kbd "C-c o") 'ff-find-other-file)))
 
-;; use only one desktop
-(setq desktop-path '("~/.emacs.d/"))
-(setq desktop-dirname "~/.emacs.d/")
-(setq desktop-base-file-name "emacs-desktop")
+(require 'desktop-menu)
+(desktop-menu-mode)
 
-;; remove desktop after it's been read
-(add-hook 'desktop-after-read-hook
-	  '(lambda ()
-	     ;; desktop-remove clears desktop-dirname
-	     (setq desktop-dirname-tmp desktop-dirname)
-	     (desktop-remove)
-	     (setq desktop-dirname desktop-dirname-tmp)))
+(require-package 'window-number)
+(require 'window-number)
+(window-number-mode 1)
+(global-set-key [remap other-window]
+                'window-number-switch)
 
-(defun saved-session ()
-  (file-exists-p (concat desktop-dirname "/" desktop-base-file-name)))
 
-;; use session-restore to restore the desktop manually
-(defun session-restore ()
-  "Restore a saved emacs session."
-  (interactive)
-  (if (saved-session)
-      (desktop-read)
-    (message "No desktop found.")))
+(require-package 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
-;; use session-save to save the desktop manually
-(defun session-save ()
-  "Save an emacs session."
-  (interactive)
-  (if (saved-session)
-      (if (y-or-n-p "Overwrite existing desktop? ")
-	  (desktop-save-in-desktop-dir)
-	(message "Session not saved."))
-  (desktop-save-in-desktop-dir)))
-
-;; ask user whether to restore desktop at start-up
-(add-hook 'after-init-hook
-	  '(lambda ()
-	     (if (saved-session)
-		 (if (y-or-n-p "Restore desktop? ")
-		     (session-restore)))))
-
+(require-package 'flycheck-irony)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
 
 (provide 'init-preload-local)
