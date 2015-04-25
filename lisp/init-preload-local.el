@@ -1,4 +1,11 @@
+(require-package 'better-defaults)
 (global-auto-revert-mode 1)
+(require-package 'find-file-in-project)
+(require-package 'ido-ubiquitous)
+(require-package 'paredit)
+(require-package 'idle-highlight-mode)
+(require 'idle-highlight-mode)
+(idle-highlight-mode 1)
 
 ;; set color theme
 (require-package 'leuven-theme)
@@ -57,17 +64,17 @@
 
 (require-package 'recentf)
 (recentf-mode 1)
+(setq recentf-max-saved-items 30)
 (setq recentf-max-menu-items 30)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (add-to-list 'recentf-exclude "/.emacs.d/elpa/")
-(add-to-list 'recentf-exclude "/.ido.last")
+(add-to-list 'recentf-exclude "/ido.last")
 (add-to-list 'recentf-exclude "/.git/COMMIT_EDITMSG")
 
 (require-package 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
 
 (require-package 'magit)
 (setq magit-last-seen-setup-instructions "1.4.0")
