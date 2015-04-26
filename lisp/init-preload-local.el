@@ -202,9 +202,11 @@ point reaches the beginning or end of the buffer, stop there."
 (desktop-menu-mode)
 (setq desktop-files-not-to-save "^$")
 
-(require-package 'window-numbering)
-(require 'window-numbering)
-(window-numbering-mode 1)
+(require-package 'window-number)
+(require 'window-number)
+(window-number-mode)
+(window-number-meta-mode)
+
 
 
 (require-package 'flycheck)
