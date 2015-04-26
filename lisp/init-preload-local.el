@@ -207,7 +207,8 @@ point reaches the beginning or end of the buffer, stop there."
 (window-number-mode)
 (window-number-meta-mode)
 
-
+(require-package 'diminish)
+(require 'diminish)
 
 (require-package 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -229,8 +230,9 @@ point reaches the beginning or end of the buffer, stop there."
   "XX......")
 (fringe-helper-define 'git-gutter-fr+-modified '(top repeat)
   "XX......")
-
-
+(defun my-git-gutter+-hook ()
+  (diminish 'git-gutter+-mode))
+(add-hook 'git-gutter+-mode-hook 'my-git-gutter+-hook)
 
 
 (provide 'init-preload-local)
