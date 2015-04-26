@@ -1,8 +1,16 @@
 (require-package 'better-defaults)
+(require 'better-defaults)
 (global-auto-revert-mode 1)
+
 (require-package 'find-file-in-project)
+(require 'find-file-in-project)
+
 (require-package 'ido-ubiquitous)
+(require 'ido-ubiquitous)
+
 (require-package 'paredit)
+(require 'paredit)
+
 (require-package 'idle-highlight-mode)
 (require 'idle-highlight-mode)
 (idle-highlight-mode 1)
@@ -72,6 +80,7 @@
 (add-to-list 'recentf-exclude "/.git/COMMIT_EDITMSG")
 
 (require-package 'smex)
+(require 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -111,9 +120,15 @@
 (add-hook 'objc-mode-hook 'ggtags-mode)
 
 (require-package 'irony)
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
+(require 'irony)
+(defun my-c++-hooks ()
+  (yas/minor-mode-on)
+  (when (member major-mode irony-known-modes)
+    (irony-mode 1)))
+
+(add-hook 'c++-mode-hook 'my-c++-hooks)
+(add-hook 'c-mode-hook 'my-c++-hooks)
+(add-hook 'objc-mode-hook 'my-c++-hooks)
 
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
@@ -185,12 +200,11 @@ point reaches the beginning or end of the buffer, stop there."
 
 (require 'desktop-menu)
 (desktop-menu-mode)
+(setq desktop-files-not-to-save "^$")
 
-(require-package 'window-number)
-(require 'window-number)
-(window-number-mode 1)
-(global-set-key [remap other-window]
-                'window-number-switch)
+(require-package 'window-numbering)
+(require 'window-numbering)
+(window-numbering-mode 1)
 
 
 (require-package 'flycheck)
@@ -198,7 +212,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (require-package 'flycheck-irony)
 (eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  '(add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
 
 
 (provide 'init-preload-local)
