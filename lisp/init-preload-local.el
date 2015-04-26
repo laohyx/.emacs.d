@@ -20,7 +20,7 @@
 (if window-system
     (load-theme 'leuven t))
 
-
+(winner-mode)
 
 ;; (require-package 'color-theme-sanityinc-tomorrow)
 ;; ;(color-theme-sanityinc-tomorrow-night)
@@ -215,6 +215,22 @@ point reaches the beginning or end of the buffer, stop there."
 (require-package 'flycheck-irony)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
+
+(require-package 'git-gutter-fringe+)
+(require 'git-gutter-fringe+)
+(setq git-gutter-fr+-side 'right-fringe)
+(set-face-foreground 'git-gutter-fr+-modified "#4D5CE0")
+(set-face-foreground 'git-gutter-fr+-added    "#01DF01")
+(set-face-foreground 'git-gutter-fr+-deleted  "#DF2D00")
+(global-git-gutter+-mode)
+(fringe-helper-define 'git-gutter-fr+-added '(top repeat)
+  "XX......")
+(fringe-helper-define 'git-gutter-fr+-deleted '(top repeat)
+  "XX......")
+(fringe-helper-define 'git-gutter-fr+-modified '(top repeat)
+  "XX......")
+
+
 
 
 (provide 'init-preload-local)
