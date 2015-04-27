@@ -15,11 +15,6 @@
 (require 'idle-highlight-mode)
 (idle-highlight-mode 1)
 
-;; set color theme
-(require-package 'leuven-theme)
-(if window-system
-    (load-theme 'leuven t))
-
 (winner-mode)
 
 ;; (require-package 'color-theme-sanityinc-tomorrow)
@@ -77,6 +72,7 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 (add-to-list 'recentf-exclude "/.emacs.d/elpa/")
 (add-to-list 'recentf-exclude "/ido.last")
+(add-to-list 'recentf-exclude "/company-statistics-cache.el")
 (add-to-list 'recentf-exclude "/.git/COMMIT_EDITMSG")
 
 (require-package 'smex)
@@ -233,6 +229,17 @@ point reaches the beginning or end of the buffer, stop there."
 (defun my-git-gutter+-hook ()
   (diminish 'git-gutter+-mode))
 (add-hook 'git-gutter+-mode-hook 'my-git-gutter+-hook)
+
+(require-package 'company-statistics)
+(require 'company-statistics)
+(company-statistics-mode)
+
+
+;; set color theme
+(require-package 'leuven-theme)
+(if window-system
+    (load-theme 'leuven t))
+
 
 
 (provide 'init-preload-local)
