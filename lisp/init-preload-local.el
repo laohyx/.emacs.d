@@ -240,7 +240,15 @@ point reaches the beginning or end of the buffer, stop there."
 (if window-system
     (load-theme 'leuven t))
 
+(require 'copy-code)
 
+(require-package 'elpy)
+(require 'elpy)
+(elpy-enable)
+
+(require-package 'company-quickhelp)
+(require 'company-quickhelp)
+(company-quickhelp-mode 1)
 
 (provide 'init-preload-local)
 
